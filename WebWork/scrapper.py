@@ -6,12 +6,9 @@ from selenium.webdriver.common.by import By
 import shared
 from CONSTANTS import COOKIES_INFO_BAR
 
-
-driver = None
-
 def get_element(address, timeout=10):
     try:
-        button = WebDriverWait(driver, timeout).until(
+        button = WebDriverWait(shared.driver, timeout).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, address))
         )
         return button
@@ -21,7 +18,7 @@ def get_element(address, timeout=10):
 
 def does_element_exist(address):
     try:
-        button = WebDriverWait(driver, 0).until(
+        button = WebDriverWait(shared.driver, 0).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, address))
         )
         return True
@@ -31,15 +28,14 @@ def does_element_exist(address):
 
 def update_cookie_info():
     try:
-        cookies = WebDriverWait(driver, 0).until(
+        cookies = WebDriverWait(shared.driver, 0).until(
             EC.presence_of_element_located((By.CSS_SELECTOR,COOKIES_INFO_BAR))
         )
-        shared.total_cps = cookies.text.split(" ")[0]
+        shared.cps_without_clicking = cookies.text.split(" ")[0]
         shared.current_cookie_count = cookies.text.split(": ")[1]
+        #shared.mouse_cps = driver.execute_script(f"return Game.computeMouseCps;")
+
+
     except Exception as e:
         print("ERROR (get_num_of_cookies): ", e)
 
-
-def set_driver(d):
-    global driver
-    driver = d

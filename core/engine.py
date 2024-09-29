@@ -3,10 +3,9 @@ import threading
 import shared
 from WebWork import scrapper
 from core import achievements
+from core.logic import purchases
 from progress import saves
 
-cookie_count = 0
-total_cps = 0
 buildings_array = []
 
 def start_logic():
@@ -17,6 +16,8 @@ def start_logic():
 
     while True:
         scrapper.update_cookie_info()
+        #purchases.set_values()
+        print(shared.mouse_cps)
 
 
 

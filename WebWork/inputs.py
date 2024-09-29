@@ -9,13 +9,14 @@ from selenium.webdriver.common.by import By
 
 from selenium.webdriver.support.wait import WebDriverWait
 
-driver = None
+import shared
+
 
 def click_address(address, retries=0, timeout=20):
     tries = 0
     while tries <= retries:
         try:
-            button = WebDriverWait(driver, timeout).until(
+            button = WebDriverWait(shared.driver, timeout).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, address))
             )
             button.click()
@@ -30,7 +31,7 @@ def click_element(element):
 def send_keys(address, text, timeout=20):
     pc.copy(text)
     try:
-        text_box = WebDriverWait(driver,timeout).until(
+        text_box = WebDriverWait(shared.driver,timeout).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, address))
         )
         text_box.send_keys(Keys.CONTROL, 'v')
@@ -39,17 +40,17 @@ def send_keys(address, text, timeout=20):
 
 def scroll_into_view(address, timeout=10):
     try:
-        button = WebDriverWait(driver, timeout).until(
+        button = WebDriverWait(shared.driver, timeout).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, address))
         )
-        ActionChains(driver).move_to_element(button).perform()
+        ActionChains(shared.driver).move_to_element(button).perform()
     except Exception as e:
         print("ERROR (scroll_into_view) with address ", address, ": ", e)
 
 def auto_clicker(address, cps=25, retry_time=0.05, timeout=1):
     while True:
         try:
-            button = WebDriverWait(driver,timeout).until(
+            button = WebDriverWait(shared.driver,timeout).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, address))
             )
             while button.is_displayed():
@@ -58,8 +59,3 @@ def auto_clicker(address, cps=25, retry_time=0.05, timeout=1):
             raise Exception("Can't click cookie")
         except Exception as e:
             time.sleep(retry_time)
-
-
-def set_driver(d):
-    global driver
-    driver = d
