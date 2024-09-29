@@ -12,4 +12,4 @@ def calculate_building_value(building):
 
     numerator = building.get_cps_per()
     denominator = (building.get_price**2) / shared.cps_without_clicking
-    return numerator / denominator
+    return numerator / denominator + 200
