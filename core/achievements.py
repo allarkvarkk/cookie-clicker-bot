@@ -6,14 +6,14 @@ from CONSTANTS import *
 
 news_clicks = 50
 
-def get_free_achievements():
+def get_free_achievements() -> None:
     threads = []
 
-    def news_achievement():
+    def news_achievement() -> None:
         for i in range(news_clicks+1): #achievement requires 50 clicks on news
             inputs.click_address(NEWS_ADDRESS, retries=10) #sometimes takes a while to load
 
-    def stat_achievements():
+    def stat_achievements() -> None:
         inputs.click_address(STATS_ADDRESS, retries=10) #somtimes takes a while to load
         inputs.click_address(SMALL_COOKIE_ADDRESS)
         inputs.scroll_into_view(HIDDEN_ACHIEVEMENT_ADDRESS)
@@ -21,7 +21,7 @@ def get_free_achievements():
         inputs.click_address(HIDDEN_ACHIEVEMENT_ADDRESS)
         inputs.click_address(STATS_ADDRESS)  # exit stats tab
 
-    def rename_achievement():
+    def rename_achievement() -> None:
         inputs.click_address(NAME_ADDRESS)
         inputs.send_keys(NAME_BOX_ADDRESS, "BOT", )
         inputs.click_address(NAME_CONFIRM_ADDRESS)
@@ -36,8 +36,8 @@ def get_free_achievements():
 
     rename_achievement()
 
-def close_notifications(do_once=False):
-    def close():
+def close_notifications(do_once=False) -> None:
+    def close() -> None:
         if scrapper.does_element_exist(ACHIEVEMENT_POP_UP_X):
             inputs.click_address(ACHIEVEMENT_POP_UP_X)
         else:

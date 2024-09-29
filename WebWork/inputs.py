@@ -12,7 +12,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 import shared
 
 
-def click_address(address, retries=0, timeout=20):
+def click_address(address, retries=0, timeout=20) -> None:
     tries = 0
     while tries <= retries:
         try:
@@ -25,10 +25,11 @@ def click_address(address, retries=0, timeout=20):
             if tries == retries:
                 print("ERROR (click_element) ", address, ": ", e)
                 tries += 1
-def click_element(element):
-    element.click()
 
-def send_keys(address, text, timeout=20):
+def click_script(address) -> None:
+    shared.driver(f"document.querySelector('{address}').click();")
+
+def send_keys(address, text, timeout=20) -> None:
     pc.copy(text)
     try:
         text_box = WebDriverWait(shared.driver,timeout).until(
@@ -38,7 +39,7 @@ def send_keys(address, text, timeout=20):
     except Exception as e:
         print("ERROR (send_keys) ", address, ": ", e)
 
-def scroll_into_view(address, timeout=10):
+def scroll_into_view(address, timeout=10) -> None:
     try:
         button = WebDriverWait(shared.driver, timeout).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, address))
@@ -47,16 +48,8 @@ def scroll_into_view(address, timeout=10):
     except Exception as e:
         print("ERROR (scroll_into_view) with address ", address, ": ", e)
 
-def auto_clicker(address, clicks_per_sec=25, retry_time=0.05, timeout=1):
+def auto_clicker(clicks_per_sec=25) -> None:
+    shared.clicks_per_second = clicks_per_sec
     while True:
-        try:
-            button = WebDriverWait(shared.driver,timeout).until(
-                EC.presence_of_element_located((By.CSS_SELECTOR, address))
-            )
-            while button.is_displayed():
-                button.click()
-                shared.clicks_per_second = clicks_per_sec
-                time.sleep(1/clicks_per_sec)
-            raise Exception("Can't click cookie")
-        except Exception as e:
-            time.sleep(retry_time)
+        shared.driver.execute_script(f"Game.ClickCookie();")
+        time.sleep(1/clicks_per_sec)

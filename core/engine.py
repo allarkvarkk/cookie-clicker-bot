@@ -7,7 +7,7 @@ from core.logic import purchases
 from progress import saves
 
 
-def start_logic():
+def start_logic() -> None:
     if saves.save_string.replace(" ", "") == "":
         achievements.get_free_achievements()
 

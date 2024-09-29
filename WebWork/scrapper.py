@@ -26,7 +26,7 @@ def does_element_exist(address):
         return False
 
 
-def update_cookie_info():
+def update_cookie_info() -> None:
     shared.cps_without_clicking = shared.driver.execute_script(f"return Game.cookiesPs;")
     shared.current_cookie_count = shared.driver.execute_script(f"return Game.cookies;")
     shared.click_value = shared.driver.execute_script(f"return Game.computedMouseCps;")

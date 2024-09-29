@@ -1,9 +1,7 @@
 import shared
 
 
-
-
-def set_values():
+def set_values() -> None:
     for building in shared.buildings_array:
         building.set_value(calculate_building_value(building))
 
