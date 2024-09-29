@@ -4,17 +4,11 @@ from selenium.webdriver.common.by import By
 
 class Buildings:
 
-    def __init__(self, address, name):
-        self.element = scrapper.get_element(address)
+    def __init__(self, name):
+        self.price = 0
         self.object_name = name
 
-        price_text = self.element.find_element(By.CSS_SELECTOR, ".price").text
-        if price_text == "" or price_text == " ":  # Checks if the price string is empty (building not listed yet)
-            self.price = 0
-        else:
-            self.price = shared.convert_string_to_price(price_text)
-
-        self.quantity = self.element.find_element(By.CSS_SELECTOR, ".title.owned").text
+        self.quantity = shared.driver.execute_script(f"return Game.Objects['{self.object_name}'].amount;")
         self.total_building_cps = shared.driver.execute_script(f"return Game.Objects['{self.object_name}'].storedTotalCps;")
         self.cps_per = shared.driver.execute_script(f"return Game.Objects['{self.object_name}'].storedCps")
 
@@ -43,10 +37,13 @@ class Buildings:
         return self.cps_per
     
     def buy(self):
-        inputs.click_element(self.element)
+        shared.driver.execute_script(f"Game.Objects['{self.object_name}'].buy();")
 
     def get_value(self):
         return self.value
 
     def set_value(self, value):
         self.value = value
+
+    def update_price(self):
+        self.price = shared.driver.execute_script(f"return Game.Objects['{self.object_name}'].price;")

@@ -47,7 +47,7 @@ def scroll_into_view(address, timeout=10):
     except Exception as e:
         print("ERROR (scroll_into_view) with address ", address, ": ", e)
 
-def auto_clicker(address, cps=25, retry_time=0.05, timeout=1):
+def auto_clicker(address, clicks_per_sec=25, retry_time=0.05, timeout=1):
     while True:
         try:
             button = WebDriverWait(shared.driver,timeout).until(
@@ -55,7 +55,8 @@ def auto_clicker(address, cps=25, retry_time=0.05, timeout=1):
             )
             while button.is_displayed():
                 button.click()
-                time.sleep(1/cps)
+                shared.clicks_per_second = clicks_per_sec
+                time.sleep(1/clicks_per_sec)
             raise Exception("Can't click cookie")
         except Exception as e:
             time.sleep(retry_time)

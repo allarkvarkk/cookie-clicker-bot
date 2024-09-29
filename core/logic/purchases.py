@@ -9,7 +9,9 @@ def set_values():
 
 # value = (building CPS_per)/(cost)(time to afford)
 def calculate_building_value(building):
-
     numerator = building.get_cps_per()
-    denominator = (building.get_price**2) / shared.cps_without_clicking
-    return numerator / denominator + 200
+    if building.get_price() == 0:
+        return 0
+
+    denominator = (building.get_price()**2) / (shared.cps_without_clicking+shared.mouse_cps)
+    return numerator / denominator

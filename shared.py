@@ -11,8 +11,10 @@ from core.classes.buildings import Buildings
 from progress import saves
 
 buildings_array = []
+clicks_per_second = 0
 cps_without_clicking = 0
 mouse_cps = 0
+click_value = 0
 current_cookie_count = 0
 
 driver: Optional[webdriver] = None
@@ -32,25 +34,25 @@ def start(d: webdriver):
 def fill_buildings_array():
     while not scrapper.get_element(OPTIONS_ADDRESS): #Ensures loaded in (options element exists)
         time.sleep(0.1)
-    buildings_array.append(Buildings(CURSOR_ADDRESS, "Cursor"))
-    buildings_array.append(Buildings(GRANDMA_ADDRESS, "Grandma"))
-    buildings_array.append(Buildings(FARM_ADDRESS, "Farm"))
-    buildings_array.append(Buildings(MINE_ADDRESS, "Mine"))
-    buildings_array.append(Buildings(FACTORY_ADDRESS, "Factory"))
-    buildings_array.append(Buildings(BANK_ADDRESS, "Bank"))
-    buildings_array.append(Buildings(TEMPLE_ADDRESS, "Temple"))
-    buildings_array.append(Buildings(WIZARD_ADDRESS, "Wizard tower"))
-    buildings_array.append(Buildings(SHIPMENT_ADDRESS, "Shipment"))
-    buildings_array.append(Buildings(ALCHEMY_ADDRESS, "Alchemy lab"))
-    buildings_array.append(Buildings(PORTAL_ADDRESS, "Portal"))
-    buildings_array.append(Buildings(TIME_ADDRESS, "Time machine"))
-    buildings_array.append(Buildings(PRISM_ADDRESS, "Prism"))
-    buildings_array.append(Buildings(CHANCEMAKER_ADDRESS, "Chancemaker"))
-    buildings_array.append(Buildings(FRACTAL_ADDRESS, "Fractal engine"))
-    buildings_array.append(Buildings(JAVASCRIPT_ADDRESS, "Javascript console"))
-    buildings_array.append(Buildings(IDLEVERSE_ADDRESS, "Idleverse"))
-    buildings_array.append(Buildings(CORTEX_ADDRESS, "Cortex baker"))
-    buildings_array.append(Buildings(YOU_ADDRESS, "You"))
+    buildings_array.append(Buildings("Cursor"))
+    buildings_array.append(Buildings("Grandma"))
+    buildings_array.append(Buildings("Farm"))
+    buildings_array.append(Buildings("Mine"))
+    buildings_array.append(Buildings("Factory"))
+    buildings_array.append(Buildings("Bank"))
+    buildings_array.append(Buildings("Temple"))
+    buildings_array.append(Buildings("Wizard tower"))
+    buildings_array.append(Buildings("Shipment"))
+    buildings_array.append(Buildings("Alchemy lab"))
+    buildings_array.append(Buildings("Portal"))
+    buildings_array.append(Buildings("Time machine"))
+    buildings_array.append(Buildings("Prism"))
+    buildings_array.append(Buildings("Chancemaker"))
+    buildings_array.append(Buildings("Fractal engine"))
+    buildings_array.append(Buildings("Javascript console"))
+    buildings_array.append(Buildings("Idleverse"))
+    buildings_array.append(Buildings("Cortex baker"))
+    buildings_array.append(Buildings("You"))
 
 def convert_string_to_price(num_string):
     num_string = num_string.replace(',','')

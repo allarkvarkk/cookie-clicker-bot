@@ -27,15 +27,8 @@ def does_element_exist(address):
 
 
 def update_cookie_info():
-    try:
-        cookies = WebDriverWait(shared.driver, 0).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR,COOKIES_INFO_BAR))
-        )
-        shared.cps_without_clicking = cookies.text.split(" ")[0]
-        shared.current_cookie_count = cookies.text.split(": ")[1]
-        #shared.mouse_cps = driver.execute_script(f"return Game.computeMouseCps;")
-
-
-    except Exception as e:
-        print("ERROR (get_num_of_cookies): ", e)
+    shared.cps_without_clicking = shared.driver.execute_script(f"return Game.cookiesPs;")
+    shared.current_cookie_count = shared.driver.execute_script(f"return Game.cookies;")
+    shared.click_value = shared.driver.execute_script(f"return Game.computedMouseCps;")
+    shared.mouse_cps = shared.click_value * shared.clicks_per_second
 

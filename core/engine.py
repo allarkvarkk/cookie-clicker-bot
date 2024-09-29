@@ -6,7 +6,6 @@ from core import achievements
 from core.logic import purchases
 from progress import saves
 
-buildings_array = []
 
 def start_logic():
     if saves.save_string.replace(" ", "") == "":
@@ -16,5 +15,12 @@ def start_logic():
 
     while True:
         scrapper.update_cookie_info()
-        #purchases.set_values()
-        print(shared.mouse_cps)
+
+        for i in shared.buildings_array:
+            i.update_price()
+
+        purchases.set_values()
+
+        largest_value = max(shared.buildings_array, key=lambda building: building.get_value())
+        if shared.current_cookie_count >= largest_value.get_price():
+            largest_value.buy()
